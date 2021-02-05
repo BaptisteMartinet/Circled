@@ -52,6 +52,8 @@ const PLAYERS = Object.freeze({"ME":0, "HIM":1});
 var players = [null, null];
 var zone = null;
 
+var Socket = null;
+
 function drawBackground()
 {
   noFill();
@@ -74,6 +76,11 @@ function setup() {
   players[PLAYERS.HIM] = new Player(createVector(400, 400), 50, color(200, 0, 0));
   
   zone = new Zone(createVector(400, 400), 200);
+
+  socket = io.connect();
+  socket.on('connect', function() {
+    console.log('Socket status', socket.connected);
+  });
 }
 
 function draw() {
