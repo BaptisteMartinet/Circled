@@ -3,11 +3,12 @@
 */
 
 class Player {
-  constructor(_pos, _radius, _color) {
+  constructor(_pos, _radius, _color, _isMine) {
     this.pos = _pos;
     this.destination = createVector(this.pos.x, this.pos.y);
     this.radius = _radius;
     this.color = _color;
+    this.isMine = _isMine;
   }
 
   update() {
@@ -20,6 +21,15 @@ class Player {
     strokeWeight(6)
     fill(this.color)
     circle(this.pos.x, this.pos.y, this.radius);
+
+    if (this.isMine) {
+      fill(255);
+      stroke(255, 255, 255, 150);
+      strokeWeight(5)
+      textAlign(CENTER, CENTER);
+      textSize(10);
+      text('+', this.pos.x, this.pos.y);
+    }
   }
   
   setDestination(_x, _y) {
@@ -61,10 +71,16 @@ function drawBackground()
   strokeWeight(6)
   arc(400, 400, 800, 800, 0, PI * 2);
 
-  fill(0, 0, 0, 0)
   stroke(255)
   strokeWeight(800)
-  circle(400, 400, 1600)
+  arc(400, 400, 1600, 1600, 0, PI * 2);
+}
+
+function drawLineBetweenPLayers()
+{
+  stroke(0,0,0,30);
+  strokeWeight(6)
+  line(players[0].pos.x, players[0].pos.y, players[1].pos.x, players[1].pos.x);
 }
 
 function preload() {}
@@ -72,10 +88,12 @@ function preload() {}
 function setup() {
   createCanvas(800, 800);
 
-  players[PLAYERS.ME] = new Player(createVector(400, 400), 50, color(0, 0, 200));
-  players[PLAYERS.HIM] = new Player(createVector(400, 400), 50, color(200, 0, 0));
+  players[PLAYERS.ME] = new Player(createVector(400, 400), 50, color(0, 0, 200), true);
+  players[PLAYERS.HIM] = new Player(createVector(400, 400), 50, color(200, 0, 0), false);
   
   zone = new Zone(createVector(400, 400), 200);
+
+  noCursor()
 
   socket = io.connect();
   socket.on('connect', function() {
@@ -85,6 +103,8 @@ function setup() {
 
 function draw() {
   background(255);
+
+  drawLineBetweenPLayers();
   
   /* PLAYERS */
   for (let i = 1; i >= 0; i--) {
