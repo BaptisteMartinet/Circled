@@ -1,0 +1,28 @@
+{
+  "name": "circled",
+  "version": "1.0.0",
+  "description": "A little multiplayer game using websockets and p5.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BaptisteMartinet/Circled.git"
+  },
+  "keywords": [
+    "p5js",
+    "web sockets",
+    "circle"
+  ],
+  "author": "Baptiste Martinet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BaptisteMartinet/Circled/issues"
+  },
+  "homepage": "https://github.com/BaptisteMartinet/Circled#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.1.1"
+  }
+}
